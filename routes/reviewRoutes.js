@@ -1,4 +1,4 @@
-import express from "express";
+const express = require("express");
 import Review from "../models/Review.js";
 import Booking from "../models/Booking.js";
 import Pandit from "../models/Pandit.js"; // ⭐ Added
@@ -61,4 +61,4 @@ router.get("/", async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;
