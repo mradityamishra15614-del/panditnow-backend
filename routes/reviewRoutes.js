@@ -1,7 +1,7 @@
 const express = require("express");
-import Review from "../models/Review.js";
-import Booking from "../models/Booking.js";
-import Pandit from "../models/Pandit.js"; // ⭐ Added
+const Review = require("../models/Review");
+const Booking = require("../models/Booking");
+const Pandit = require("../models/Pandit");
 
 const router = express.Router();
 
@@ -29,7 +29,6 @@ router.post("/", async (req, res) => {
       comment,
     });
 
-    // ⭐⭐⭐⭐⭐ UPDATE PANDIT RATING (ADDED SAFELY)
     const pandit = await Pandit.findById(booking.pandit);
 
     if (pandit) {
@@ -47,7 +46,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// GET ALL REVIEWS
+// GET REVIEWS
 router.get("/", async (req, res) => {
   try {
     const reviews = await Review.find()
