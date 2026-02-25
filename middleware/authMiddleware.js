@@ -28,7 +28,7 @@ exports.protectCustomer = async (req, res, next) => {
       return res.status(401).json({ message: "Customer not found ❌" });
     }
 
-    req.user = { id: customer._id, role: "customer" };
+    req.user = { id: customer._id.toString(), role: "customer" };
     next();
   } catch (error) {
     return res.status(401).json({ message: "Invalid token ❌" });
@@ -60,7 +60,7 @@ exports.protectPandit = async (req, res, next) => {
       return res.status(401).json({ message: "Pandit not found ❌" });
     }
 
-    req.user = { id: pandit._id, role: "pandit" };
+    req.user = { id: pandit._id.toString(), role: "pandit" };
     next();
   } catch (error) {
     return res.status(401).json({ message: "Invalid token ❌" });
@@ -92,7 +92,7 @@ exports.protectAdmin = async (req, res, next) => {
       return res.status(401).json({ message: "Admin not found ❌" });
     }
 
-    req.user = { id: admin._id, role: "admin" };
+    req.user = { id: admin._id.toString(), role: "admin" };
     next();
   } catch (error) {
     return res.status(401).json({ message: "Invalid token ❌" });

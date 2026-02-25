@@ -9,25 +9,19 @@ const Pandit = require("../models/Pandit");
 exports.createBooking = async (req, res) => {
   try {
     let {
-      customerId,
-      bookingType,
-      pujaType,
-      bookingDate,
-      bookingTime,
-      address,
-      latitude,
-      longitude,
-      fixedPrice,
-      panditId,
-      city, // ✅ add city from frontend
-    } = req.body;
+  bookingType,
+  pujaType,
+  bookingDate,
+  bookingTime,
+  address,
+  latitude,
+  longitude,
+  fixedPrice,
+  panditId,
+  city,
+} = req.body;
 
-    // ✅ Customer can only book for himself
-    if (req.user?.role === "customer") {
-      if (req.user.id.toString() !== customerId.toString()) {
-        return res.status(403).json({ message: "Not allowed ❌" });
-      }
-    }
+    
 
     // normalize
     bookingType = bookingType?.trim().toLowerCase();
@@ -42,7 +36,6 @@ exports.createBooking = async (req, res) => {
     fixedPrice = Number(fixedPrice);
 
     if (
-      !customerId ||
       !bookingType ||
       !pujaType ||
       !bookingDate ||
@@ -69,7 +62,7 @@ exports.createBooking = async (req, res) => {
     }
 
     const newBooking = new Booking({
-      customer: customerId,
+      customer: req.user.id,   
       pandit: assignedPandit,
       bookingType,
       pujaType,

@@ -32,7 +32,7 @@ router.post("/create-order", protectCustomer, async (req, res) => {
       return res.status(404).json({ message: "Booking not found ❌" });
     }
 // Ensure booking belongs to logged-in customer
-if (booking.customer.toString() !== req.user.id) {
+if (booking.customer.toString() !== req.user.id.toString()) {
   return res.status(403).json({ message: "Unauthorized payment attempt ❌" });
 }
     // ✅ Only allow payment after pandit arrived
@@ -95,7 +95,7 @@ router.post("/verify-payment", protectCustomer, async (req, res) => {
       return res.status(404).json({ message: "Booking not found ❌" });
     }
 // Ensure booking belongs to logged-in customer
-if (booking.customer.toString() !== req.user.id) {
+if (booking.customer.toString() !== req.user.id.toString()) {
   return res.status(403).json({ message: "Unauthorized payment attempt ❌" });
 }
     // ✅ Payment only allowed if pandit arrived
