@@ -15,6 +15,7 @@ const panditRoutes = require("./routes/panditRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
+const pujaRoutes = require("./routes/pujaRoutes");
 connectDB();
 
 const app = express();
@@ -52,6 +53,7 @@ app.use("/api/pandits", panditRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/payment", paymentRoutes);
 app.use("/api/reviews", reviewRoutes);
+app.use("/api/pujas", pujaRoutes);
 
 app.get("/", (req, res) => {
   res.send("PanditNow Backend Running ✅");

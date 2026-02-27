@@ -2,6 +2,7 @@ const { getDistance } = require("geolib");
 
 const Booking = require("../models/Booking");
 const Pandit = require("../models/Pandit");
+const Puja = require("../models/Puja");
 
 // ===============================
 // CREATE BOOKING (Customer)
@@ -16,7 +17,6 @@ exports.createBooking = async (req, res) => {
   address,
   latitude,
   longitude,
-  fixedPrice,
   panditId,
   city,
 } = req.body;
@@ -33,23 +33,34 @@ exports.createBooking = async (req, res) => {
 
     latitude = Number(latitude);
     longitude = Number(longitude);
-    fixedPrice = Number(fixedPrice);
 
     if (
-      !bookingType ||
-      !pujaType ||
-      !bookingDate ||
-      !bookingTime ||
-      !address ||
-      !city ||
-      isNaN(latitude) ||
-      isNaN(longitude) ||
-      isNaN(fixedPrice)
-    ) {
-      return res.status(400).json({ message: "All booking fields required ❌" });
-    }
-
+  !bookingType ||
+  !pujaType ||
+  !bookingDate ||
+  !bookingTime ||
+  !address ||
+  !city ||
+  isNaN(latitude) ||
+  isNaN(longitude)
+) {
+  return res.status(400).json({
+    message: "All booking fields required ❌",
+  });
+}
     let assignedPandit = null;
+    // 🔥 Get puja from database
+const puja = await Puja.findOne({
+  name: pujaType,
+  isActive: true,
+});
+
+if (!puja) {
+  return res.status(400).json({ message: "Invalid puja selected ❌" });
+}
+
+// Always use backend price (security)
+const fixedPrice = puja.fixedPrice;
 
     // Premium booking must have panditId
     if (bookingType === "premium") {
