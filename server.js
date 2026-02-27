@@ -54,6 +54,7 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/payment", paymentRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/pujas", pujaRoutes);
+app.use("/api/samagri", require("./routes/samagriRoutes"));
 
 app.get("/", (req, res) => {
   res.send("PanditNow Backend Running ✅");
